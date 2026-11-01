@@ -4,6 +4,8 @@ Two small rules for an API that can start before it is actually ready, and that 
 
 **Readiness.** The process can accept HTTP before application startup tasks finish. `GET /actuator/health` stays `{"status":"DOWN"}` until a startup check reads the database and then marks the process ready. After that the same URL returns `{"status":"UP"}`. The body has no component details.
 
+The startup check, the health response, and the order of `403`, `401`, and `503` are in [docs/architecture.md](docs/architecture.md).
+
 **Disabled features.** Mail is off in this sample.
 
 - `POST /api/newsletter/subscriptions` is anonymous. With a valid CSRF token it returns `503` and `"code":"FEATURE_DISABLED"`. Without the CSRF header it returns `403`.
